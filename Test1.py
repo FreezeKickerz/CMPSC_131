@@ -1,10 +1,10 @@
 x = input("Please enter a character: ")
 if type(x)==int:
-    if int(x)>=0 & int(x)<=3:
+    if int(x)>=0 and int(x)<=3:
         print("small")
-    elif int(x)>=4 & int(x)<=6:
+    elif int(x)>=4 and int(x)<=6:
         print("medium")
-    elif int(x)>=7 & int(x)<=9:
+    elif int(x)>=7 and int(x)<=9:
         print("large")
 elif type(x) !=int:
     if (ord(x)>=65)&(ord(x)<=90):

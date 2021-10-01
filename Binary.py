@@ -13,6 +13,6 @@ elif digitOne <= 1 and digitTwo <= 1 and digitThree <= 1 and digitFour <= 1 and 
         digitThree = (2**2)*digitThree
         digitFour = (2**1)*digitFour
         digitFive = (2**0)*digitFive
-        print(digitOne + digitTwo + digitThree + digitFour + digitFive) 
+        print("The value in decimal is: ", digitOne + digitTwo + digitThree + digitFour + digitFive) 
 else: 
     print("Not a valid binary number")
