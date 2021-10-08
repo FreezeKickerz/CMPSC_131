@@ -6,7 +6,7 @@ counter = userInput
 
 i = 0
 while i < 5:
-# Find 5 Lower Primes
+
     counter+=1
     for j in range(2, counter):
         if counter % j == 0:
@@ -14,7 +14,7 @@ while i < 5:
     else: 
         higherPrimes.append(counter)
         i+=1
-# End Code for Higher Primes
+
 counter=userInput
 p = 0
 while p < 5:
@@ -27,5 +27,9 @@ while p < 5:
         p+=1
     if counter <= 2:
         break
-print("Larger primes: ", higherPrimes[0],higherPrimes[1],higherPrimes[2],higherPrimes[3],higherPrimes[4])
-print("Smaller primes: ", lowerPrimes[0],lowerPrimes[1],lowerPrimes[2],lowerPrimes[3],lowerPrimes[4])
+print("Larger primes: ", end=" ")
+for x in range(len(higherPrimes)):
+    print(higherPrimes[x],end=" ")
+print("\nSmaller primes: ",end=" ")
+for x in range(len(lowerPrimes)):
+    print(lowerPrimes[x],end=" ")
