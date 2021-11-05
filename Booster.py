@@ -15,7 +15,7 @@ for x in boostTimes:
         time = (60*int(y[0])) + int(y[1])
         minuteTimes.append(time)
 minuteTimes.sort()
-for x in len(minuteTimes)-1:
+for x in range(len(minuteTimes)-1):
     diff = minuteTimes[x+1]- minuteTimes[x]
     if(breakTime > diff):
         possible = False
