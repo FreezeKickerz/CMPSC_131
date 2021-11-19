@@ -13,7 +13,7 @@ def ssnCheck(x):
         else:
             return False
     for j in range(4, 6):
-       if x[j].isdecimal(): 
+        if x[j].isdecimal(): 
             continue
         else:
             return False
