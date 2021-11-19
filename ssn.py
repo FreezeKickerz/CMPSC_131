@@ -1,7 +1,7 @@
-inputFile = open("information.txt")
+inputFile = open("information.txt","r")
 lines =  inputFile.readlines()
 outputFile = open("ssn.txt","w")
-ssn = []
+
 def ssnCheck(x):
     if len(x) != 11:
         return False
@@ -28,5 +28,5 @@ for line in lines:
     for x in range(len(line)+1):
         y = line[x:x+11]
         if ssnCheck(y)==True:
-            outputFile.write(str(x))
+            outputFile.write(y)
             outputFile.write("\n")
