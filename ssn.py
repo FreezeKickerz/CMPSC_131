@@ -1,6 +1,6 @@
 inputFile = open("information.txt")
 lines =  inputFile.readlines()
-outputFile = open("snn.txt","w")
+outputFile = open("ssn.txt","w")
 ssn = []
 def ssnCheck(x):
     if len(x) != 11:
