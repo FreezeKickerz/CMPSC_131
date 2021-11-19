@@ -28,5 +28,5 @@ for line in lines:
     for x in range(len(line)+1):
         y = line[x:x+11]
         if ssnCheck(y)==True:
-            outputFile.write(x)
+            outputFile.write(str(x))
             outputFile.write("\n")
