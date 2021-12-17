@@ -27,9 +27,9 @@ for x in books:
     bookRestrictions.append(restrictions)
     totalDaysBorrowed.append(0)
     totalDaysFree.append(int(line[1])*(presentDate-1))
-print(bookName)
-print(bookCopies)
-print(bookRestrictions)
+#print(bookName)
+#print(bookCopies)
+#print(bookRestrictions)
 
 # Library Log Variables
 
@@ -37,7 +37,7 @@ print(bookRestrictions)
 #DaysOverdue[0]DayTakenOut[1]DaysBorrowedFor[2]Returned[3]
 personInfo = {}
 
-#Name:Amount of Books out[0]Fines[1]
+#Name:Amount of Books out[0]Fine$[1]
 personBlacklist = {}
 
 libraryLog = open("librarylog-2.txt","r")
@@ -55,11 +55,12 @@ for x in log:
     if line[0] == "B":     
         if line[3] not in personInfo[line[2]]:
             personInfo[line[2]][line[3]] = [0,int(line[1]),int(line[4]),0]
-       
-        personInfo[line[2]][line[3]][1] = int(line[1])
-        personInfo[line[2]][line[3]][2] = int(line[4])
-        personInfo[line[2]][line[3]][3] = 0
-        personBlacklist[line[2]][0]+= 1
+        else:
+            personBlacklist[line[2]][0]+= 1
+            personInfo[line[2]][line[3]][1] = int(line[1])
+            personInfo[line[2]][line[3]][2] = int(line[4])
+            personInfo[line[2]][line[3]][3] = 0
+        
 
     #Return Function
     if line[0] == "R":
@@ -74,7 +75,7 @@ for x in log:
         #Fine Calculations
         if days_borrowed > int(personInfo[line[2]][line[3]][2]):
             sum = days_borrowed - int(personInfo[line[2]][line[3]][2])
-            personInfo[line[2]][line[3]][0] += sum
+            personInfo[line[2]][line[3]][0] = sum
             personBlacklist[line[2]][1] = sum*(1+(4*bookRestrictions[bookPosition]))
 
     #Paying Fine Calculation
@@ -98,25 +99,42 @@ for x in log:
 # Total Days Borrowed per Book
 for names in personInfo:
     for book_names in personInfo[names]:
-       temp = personInfo[names][book_names][1]+personInfo[names][book_names][2]
-       if personInfo[names][book_names][3] != 1:
+       temp = personInfo[names][book_names][0]+personInfo[names][book_names][2]
+       #Checks fo Books not turned in
+       #Only takes current date - date the book was taken out
+       if personInfo[names][book_names][3] == 0:
            bookPosition = bookName.index(book_names)
-           totalDaysBorrowed[bookPosition]+=temp
+           x = presentDate - personInfo[names][book_names][1]
+           totalDaysBorrowed[bookPosition]+=x
 
 
 
+#Borrowed vs Not Borrowed
+for names in bookName:
+    bookPosition = bookName.index(names)
+    print(totalDaysBorrowed[bookPosition], "days borrowed out of", totalDaysFree[bookPosition],":",str(names))
 
 #Book Usage Percentage
 for names in bookName:
     bookPosition = bookName.index(names)
-    usage = 100*((totalDaysBorrowed[bookPosition])/(float(totalDaysFree[bookPosition])))
+    usage = ((totalDaysBorrowed[bookPosition])/(float(totalDaysFree[bookPosition])))*100
     usagePerBook.append(usage)
+    print(str(names),"usage: ", str(usage))
+
+for x in range(len(bookName)):
+    sortedUsagePerBook = usagePerBook
+    sortedUsagePerBook.sort(reverse = True)
+    #usagePerBookLength = len(usagePerBook)
+    for value in range(len(usagePerBook)):
+        if ((sortedUsagePerBook[x])/(usagePerBook[value])) == 1:
+            print(,"With usage ", sortedUsagePerBook[value])
 
 
 
-print(personBlacklist)
-print(personInfo)
-print(totalDaysBorrowed)
+#Most 
+#print(personBlacklist)
+#print(personInfo)
+#print(totalDaysBorrowed)
 
 
 
