@@ -7,7 +7,14 @@ bookName = []
 bookCopies = []
 bookRestrictions = []
 totalDaysBorrowed = []
-daysFree = []
+totalDaysFree = []
+usagePerBook = []
+
+#Getting Date Variable from End of File
+libraryLog = open("librarylog-2.txt","r")
+forDate = libraryLog.read().split("\n")
+presentDate = int(forDate[len(forDate)-1])
+libraryLog.close()
 
 # Format <book name>#<number of copies>#<restricted>
 for x in books:
@@ -19,7 +26,7 @@ for x in books:
         restrictions = 1
     bookRestrictions.append(restrictions)
     totalDaysBorrowed.append(0)
-    
+    totalDaysFree.append(int(line[1])*(presentDate-1))
 print(bookName)
 print(bookCopies)
 print(bookRestrictions)
@@ -80,14 +87,36 @@ for x in log:
             bookName.append(line[2])
             bookCopies.append(1)
             bookRestrictions.append(0)
+            totalDaysBorrowed.append(0)
+            totalDaysFree.append(presentDate-int(line[1]))
         else:
             bookPosition = bookName.index(line[2])
             bookCopies[bookPosition] += 1
-    totalDaysBorrowed.append(0)
+            x = (presentDate - int(line[1]))
+            totalDaysFree[bookPosition] += (presentDate-int(line[1]))
+
+# Total Days Borrowed per Book
+for names in personInfo:
+    for book_names in personInfo[names]:
+       temp = personInfo[names][book_names][1]+personInfo[names][book_names][2]
+       if personInfo[names][book_names][3] != 1:
+           bookPosition = bookName.index(book_names)
+           totalDaysBorrowed[bookPosition]+=temp
+
+
+
+
+#Book Usage Percentage
+for names in bookName:
+    bookPosition = bookName.index(names)
+    usage = 100*((totalDaysBorrowed[bookPosition])/(float(totalDaysFree[bookPosition])))
+    usagePerBook.append(usage)
+
+
 
 print(personBlacklist)
 print(personInfo)
-
+print(totalDaysBorrowed)
 
 
 
