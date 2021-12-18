@@ -39,7 +39,7 @@ personInfo = {}
 #Name:Amount of Books out[0]Fine$[1]
 personBlacklist = {}
 
-libraryLog = open("librarylog-2.txt","r")
+libraryLog = open("librarylog-3.txt","r")
 log = libraryLog.read().split("\n")[:-1]
 libraryLog.close()
 
