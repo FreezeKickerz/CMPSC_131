@@ -1,4 +1,4 @@
-bookList = open("booklist-1.txt","r")
+bookList = open("booklist-2.txt","r")
 books = bookList.read().split("\n")
 bookList.close()
 
@@ -8,10 +8,11 @@ bookCopies = []
 bookRestrictions = []
 totalDaysBorrowed = []
 totalDaysFree = []
+totalBookCopies = []
 usagePerBook = []
 
 #Getting Date Variable from End of File
-libraryLog = open("librarylog-2.txt","r")
+libraryLog = open("librarylog-3.txt","r")
 forDate = libraryLog.read().split("\n")
 presentDate = int(forDate[len(forDate)-1])
 libraryLog.close()
@@ -22,6 +23,7 @@ for x in books:
     restrictions = 0
     bookName.append(line[0])
     bookCopies.append(int(line[1]))
+    totalBookCopies.append(int(line[1]))
     if line[2] == "TRUE":
         restrictions = 1
     bookRestrictions.append(restrictions)
@@ -87,12 +89,14 @@ for x in log:
         if line[2] not in bookName:
             bookName.append(line[2])
             bookCopies.append(1)
+            totalBookCopies.append(1)
             bookRestrictions.append(0)
             totalDaysBorrowed.append(0)
             totalDaysFree.append(presentDate-int(line[1]))
         else:
             bookPosition = bookName.index(line[2])
             bookCopies[bookPosition] += 1
+            totalBookCopies[bookPosition] +=1
             x = (presentDate - int(line[1]))
             totalDaysFree[bookPosition] += (presentDate-int(line[1]))
 
@@ -110,25 +114,26 @@ for names in personInfo:
 
 
 #Borrowed vs Not Borrowed
+print("\nDays Borrowed")
 for names in bookName:
     bookPosition = bookName.index(names)
     print(totalDaysBorrowed[bookPosition], "days borrowed out of", totalDaysFree[bookPosition],":",str(names))
 
+sortedUsagePerBook=[]
 #Book Usage Percentage
+print("\nBook Use Percentages")
 for names in bookName:
     bookPosition = bookName.index(names)
     usage = ((totalDaysBorrowed[bookPosition])/(float(totalDaysFree[bookPosition])))*100
     usagePerBook.append(usage)
+    sortedUsagePerBook.append(usage)
     print(str(names),"usage: ", str(usage))
-
+sortedUsagePerBook.sort(reverse = True)
+print("\nSorted")
 for x in range(len(bookName)):
-    sortedUsagePerBook = usagePerBook
-    sortedUsagePerBook.sort(reverse = True)
-    for value in range(len(usagePerBook)):
-        if(sortedUsagePerBook[x] % usagePerBook[value]) == 0:
-            print(bookName[x],"with usage",sortedUsagePerBook[value])
-        else:
-            continue
+    index = usagePerBook.index(sortedUsagePerBook[x])
+    print(bookName[index],"with usage",sortedUsagePerBook[x])
+    
 
 #Most 
 #print(personBlacklist)
