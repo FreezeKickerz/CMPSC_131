@@ -1,4 +1,4 @@
-bookList = open("booklist-2.txt","r")
+bookList = open("booklist-1.txt","r")
 books = bookList.read().split("\n")
 bookList.close()
 
@@ -12,7 +12,7 @@ totalBookCopies = []
 usagePerBook = []
 
 #Getting Date Variable from End of File
-libraryLog = open("librarylog-3.txt","r")
+libraryLog = open("librarylog-2.txt","r")
 forDate = libraryLog.read().split("\n")
 presentDate = int(forDate[len(forDate)-1])
 libraryLog.close()
