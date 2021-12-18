@@ -62,7 +62,6 @@ for x in log:
             personInfo[line[2]][line[3]][2] = int(line[4])
             personInfo[line[2]][line[3]][3] = 0
         
-
     #Return Function
     if line[0] == "R":
         bookPosition = bookName.index(line[3])
@@ -138,11 +137,10 @@ print("\nRemaining Fines")
 for names in personBlacklist:
     if personBlacklist[names][1]>0:
         print(str(names),"has a fine of", "$"+str(personBlacklist[names][1]))
-
-#Most 
-#print(personBlacklist)
-#print(personInfo)
-#print(totalDaysBorrowed)
+    if personBlacklist[names][0]>3:
+        print(str(names),"has more than 3 books taken out", "$"+str(personBlacklist[names][1]))
+# Restrictions
+for names in per
 
 
 
