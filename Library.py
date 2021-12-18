@@ -29,9 +29,6 @@ for x in books:
     bookRestrictions.append(restrictions)
     totalDaysBorrowed.append(0)
     totalDaysFree.append(int(line[1])*(presentDate-1))
-#print(bookName)
-#print(bookCopies)
-#print(bookRestrictions)
 
 # Library Log Variables
 
@@ -54,7 +51,9 @@ for x in log:
         personBlacklist[line[2]] = [0,0]
     
     #Borrow Function
-    if line[0] == "B":     
+    if line[0] == "B":
+        bookPosition = bookName.index(line[3])
+        bookCopies[bookPosition] -=1     
         if line[3] not in personInfo[line[2]]:
             personInfo[line[2]][line[3]] = [0,int(line[1]),int(line[4]),0]
         else:
@@ -114,14 +113,14 @@ for names in personInfo:
 
 
 #Borrowed vs Not Borrowed
-print("\nDays Borrowed")
+print("\nBorrowed Ratio")
 for names in bookName:
     bookPosition = bookName.index(names)
     print(totalDaysBorrowed[bookPosition], "days borrowed out of", totalDaysFree[bookPosition],":",str(names))
 
 sortedUsagePerBook=[]
 #Book Usage Percentage
-print("\nBook Use Percentages")
+print("\nUsage Ratio")
 for names in bookName:
     bookPosition = bookName.index(names)
     usage = ((totalDaysBorrowed[bookPosition])/(float(totalDaysFree[bookPosition])))*100
@@ -129,11 +128,16 @@ for names in bookName:
     sortedUsagePerBook.append(usage)
     print(str(names),"usage: ", str(usage))
 sortedUsagePerBook.sort(reverse = True)
-print("\nSorted")
+print("\nSorted Usage Ratio")
 for x in range(len(bookName)):
     index = usagePerBook.index(sortedUsagePerBook[x])
     print(bookName[index],"with usage",sortedUsagePerBook[x])
-    
+
+#Fine List
+print("\nRemaining Fines")
+for names in personBlacklist:
+    if personBlacklist[names][1]>0:
+        print(str(names),"has a fine of", "$"+str(personBlacklist[names][1]))
 
 #Most 
 #print(personBlacklist)
