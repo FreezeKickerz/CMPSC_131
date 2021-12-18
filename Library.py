@@ -124,12 +124,11 @@ for names in bookName:
 for x in range(len(bookName)):
     sortedUsagePerBook = usagePerBook
     sortedUsagePerBook.sort(reverse = True)
-    #usagePerBookLength = len(usagePerBook)
     for value in range(len(usagePerBook)):
-        if ((sortedUsagePerBook[x])/(usagePerBook[value])) == 1:
-            print(,"With usage ", sortedUsagePerBook[value])
-
-
+        if(sortedUsagePerBook[x] % usagePerBook[value]) == 0:
+            print(bookName[x],"with usage",sortedUsagePerBook[value])
+        else:
+            continue
 
 #Most 
 #print(personBlacklist)
