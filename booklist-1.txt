@@ -1,3 +1,0 @@
-Intro to python#2#TRUE
-Eye of the world#3#FALSE
-Goblet of fire#2#FALSE

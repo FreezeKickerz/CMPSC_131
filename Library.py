@@ -1,4 +1,4 @@
-bookList = open("booklist-1.txt","r")
+bookList = open("booklist-2.txt","r")
 books = bookList.read().split("\n")
 bookList.close()
 
@@ -8,10 +8,11 @@ bookCopies = []
 bookRestrictions = []
 totalDaysBorrowed = []
 totalDaysFree = []
+totalBookCopies = []
 usagePerBook = []
 
 #Getting Date Variable from End of File
-libraryLog = open("librarylog-2.txt","r")
+libraryLog = open("librarylog-3.txt","r")
 forDate = libraryLog.read().split("\n")
 presentDate = int(forDate[len(forDate)-1])
 libraryLog.close()
@@ -22,14 +23,12 @@ for x in books:
     restrictions = 0
     bookName.append(line[0])
     bookCopies.append(int(line[1]))
+    totalBookCopies.append(int(line[1]))
     if line[2] == "TRUE":
         restrictions = 1
     bookRestrictions.append(restrictions)
     totalDaysBorrowed.append(0)
     totalDaysFree.append(int(line[1])*(presentDate-1))
-#print(bookName)
-#print(bookCopies)
-#print(bookRestrictions)
 
 # Library Log Variables
 
@@ -40,7 +39,7 @@ personInfo = {}
 #Name:Amount of Books out[0]Fine$[1]
 personBlacklist = {}
 
-libraryLog = open("librarylog-2.txt","r")
+libraryLog = open("librarylog-3.txt","r")
 log = libraryLog.read().split("\n")[:-1]
 libraryLog.close()
 
@@ -52,7 +51,9 @@ for x in log:
         personBlacklist[line[2]] = [0,0]
     
     #Borrow Function
-    if line[0] == "B":     
+    if line[0] == "B":
+        bookPosition = bookName.index(line[3])
+        bookCopies[bookPosition] -=1     
         if line[3] not in personInfo[line[2]]:
             personInfo[line[2]][line[3]] = [0,int(line[1]),int(line[4]),0]
         else:
@@ -61,7 +62,6 @@ for x in log:
             personInfo[line[2]][line[3]][2] = int(line[4])
             personInfo[line[2]][line[3]][3] = 0
         
-
     #Return Function
     if line[0] == "R":
         bookPosition = bookName.index(line[3])
@@ -87,12 +87,14 @@ for x in log:
         if line[2] not in bookName:
             bookName.append(line[2])
             bookCopies.append(1)
+            totalBookCopies.append(1)
             bookRestrictions.append(0)
             totalDaysBorrowed.append(0)
             totalDaysFree.append(presentDate-int(line[1]))
         else:
             bookPosition = bookName.index(line[2])
             bookCopies[bookPosition] += 1
+            totalBookCopies[bookPosition] +=1
             x = (presentDate - int(line[1]))
             totalDaysFree[bookPosition] += (presentDate-int(line[1]))
 
@@ -110,18 +112,24 @@ for names in personInfo:
 
 
 #Borrowed vs Not Borrowed
+print("\nBorrowed Ratio")
 for names in bookName:
     bookPosition = bookName.index(names)
     print(totalDaysBorrowed[bookPosition], "days borrowed out of", totalDaysFree[bookPosition],":",str(names))
 
+sortedUsagePerBook=[]
 #Book Usage Percentage
+print("\nUsage Ratio")
 for names in bookName:
     bookPosition = bookName.index(names)
     usage = ((totalDaysBorrowed[bookPosition])/(float(totalDaysFree[bookPosition])))*100
     usagePerBook.append(usage)
+    sortedUsagePerBook.append(usage)
     print(str(names),"usage: ", str(usage))
-
+sortedUsagePerBook.sort(reverse = True)
+print("\nSorted Usage Ratio")
 for x in range(len(bookName)):
+<<<<<<< HEAD
     sortedUsagePerBook = usagePerBook
     sortedUsagePerBook.sort(reverse = True)
     #usagePerBookLength = len(usagePerBook)
@@ -135,6 +143,20 @@ for x in range(len(bookName)):
 #print(personBlacklist)
 #print(personInfo)
 #print(totalDaysBorrowed)
+=======
+    index = usagePerBook.index(sortedUsagePerBook[x])
+    print(bookName[index],"with usage",sortedUsagePerBook[x])
+
+#Fine List
+print("\nRemaining Fines")
+for names in personBlacklist:
+    if personBlacklist[names][1]>0:
+        print(str(names),"has a fine of", "$"+str(personBlacklist[names][1]))
+    if personBlacklist[names][0]>3:
+        print(str(names),"has more than 3 books taken out", "$"+str(personBlacklist[names][1]))
+# Restrictions
+for names in per
+>>>>>>> 2edbb8104e28b3a5714563836194f5be5900b866
 
 
 
