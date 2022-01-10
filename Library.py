@@ -127,7 +127,7 @@ for x in range(len(bookName)):
     #usagePerBookLength = len(usagePerBook)
     for value in range(len(usagePerBook)):
         if ((sortedUsagePerBook[x])/(usagePerBook[value])) == 1:
-            print(,"With usage ", sortedUsagePerBook[value])
+            print(bookName[value],"With usage ", sortedUsagePerBook[value])
 
 
 
